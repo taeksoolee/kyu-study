@@ -65,7 +65,7 @@ let curFavicon = 0;
 const faviconLink = document.createElement('link');
 faviconLink.rel = 'icon';
 faviconLink.type = 'image/x-icon';
-faviconLink.setAttribute('href', `/assets/favicon/icons8-heart-${curFavicon}.png`);
+faviconLink.setAttribute('href', `${siteContext}/assets/favicon/icons8-heart-${curFavicon}.png`);
 document.head.appendChild(faviconLink);
 // function changeFavicon() {
 //   if (curFavicon >= faviconEnd) {
