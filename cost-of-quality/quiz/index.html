@@ -162,7 +162,7 @@
     const siteContext = isDev ? '' : '/kyu-study';
     
     const script = document.createElement('script');
-    script.src = '/common-script.js';
+    script.src = `${siteContext}/common-script.js`;
     document.body.appendChild(script);
   </script>
 </body>
