@@ -82,7 +82,9 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
     `, this); 
   }
 
+  
   _curPathList = window.location.pathname
+    .replace(siteContext, '')
     .replace(/index\.html$/g, '')
     .replace(/\/$/g, '')
     .split('/');
