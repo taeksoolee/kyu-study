@@ -56,7 +56,7 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
       <nav class="navbar navbar-expand-lg bg-primary text-light">
         <div class="container-fluid">
           ${
-            !this.curPath
+            !this._curPath.replace(siteContext, '').split('/').join('/')
               ? html`
                 <div class="btn text-primary">
                   <i class="bi bi-backspace"></i>
@@ -83,18 +83,20 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
   }
 
   
-  _curPathList = window.location.pathname
-    .replace(siteContext, '')
+  _curPath = window.location.pathname
     .replace(/index\.html$/g, '')
     .replace(/\/$/g, '')
-    .split('/');
+
+  get curPathList() {
+    return this._curPath.split('/') 
+  }
 
   get curPath() {
-    return this._curPathList.join('/')
+    return this.curPathList.join('/')
   }
 
   get backPathList() {
-    return this._curPathList.slice(0, this._curPathList.length-1);
+    return this.curPathList.slice(0, this.curPathList.length-1);
   }
 
   get backUrl() {
