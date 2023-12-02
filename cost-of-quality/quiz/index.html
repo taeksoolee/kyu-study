@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>품질원가 분류 - 퀴즈풀기</title>
+  <link rel="stylesheet" href="/common-style.css" />
+  
+</head>
+<body>
+  <div id="root" class="loading">
+    <nav-bar></nav-bar>
+    <main-section>
+      <div x-data="{ 
+        data: paper,
+        cur: 0, 
+        get totalCnt() {
+          return this.data.length
+        },
+        get inputedCnt() {
+          return this.data.filter(e => !!e.input).length;
+        },
+        get disabledPreviousBtn() {
+          return this.cur <= 0;
+        },
+        get disabledNextBtn() {
+          return this.cur >= this.data.length || !this.isInputed || this.cur === this.totalCnt - 1;
+        },
+        get results() {
+          const correctCnt = this.data.reduce((a, c) => {
+            return c.input === c.answer ? a+1 : a;
+          }, 0);
+
+          return {
+            correctCnt,
+            incorrectCnt: this.inputedCnt - correctCnt,
+          }
+        },
+        get curData() {
+          return this.data[this.cur];
+        },
+        get isInputed() {
+          return !!this.curData.input;
+        },
+        get isCorrect() {
+          const e = this.curData;
+          if (!e.input) return null;
+          if (e.input && e.input === e.answer) return true;
+          if (e.input && e.input !== e.answer) return false;
+        },
+        get resultData() {
+          return JSON.stringify({
+            paper: this.data,
+            cnt: {
+              totalCnt: this.totalCnt,
+              ...this.results,
+            }
+          });
+        }
+      }">
+        <div class="mb-1">
+          <div 
+            class="progress" 
+            role="progressbar" 
+            aria-label="Progress Line" 
+            x-bind:aria-valuenow="inputedCnt" 
+            aria-valuemin="0" 
+            x-bind:aria-valuemax="totalCnt"
+          >
+            <div class="progress-bar" x-bind:style="`width: ${inputedCnt / totalCnt * 100}%`"></div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <div x-text="`${results.correctCnt}`.padStart(2, 0)" class="text-success"></div>/
+            <div x-text="`${results.incorrectCnt}`.padStart(2, 0)" class="text-danger"></div>/
+            <div x-text="`${totalCnt}`.padStart(2, 0)"></div>
+          </div>
+        </div>
+        <div class="d-flex flex-column gap-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <button 
+                x-bind:class="`btn btn-primary ${disabledPreviousBtn ? 'disabled' : ''}`" 
+                x-bind:disabled="disabledPreviousBtn"
+                @click="() => {
+                  cur = cur-1;
+                }"
+              >
+                <i class="bi bi-caret-left-fill"></i>
+              </button>
+              <button 
+                x-bind:class="`btn btn-primary ${disabledNextBtn ? 'disabled' : ''}`" 
+                x-bind:disabled="disabledNextBtn"
+                @click="() => {
+                  cur = cur+1;
+                }"
+              >
+                <i class="bi bi-caret-right-fill"></i>
+              </button>
+              <template x-if="totalCnt === inputedCnt">
+                <a
+                  x-bind:href="`../result#${resultData}`"
+                  class="btn btn-info text-white"
+                >
+                  <i class="bi bi-clipboard-data"></i>
+                </a>
+              </template>
+            </div>
+            <div>
+              <template x-if="!isInputed">
+                <span class="h1 mb-0">🟡🤔🟡</span>
+              </template>
+              <template x-if="isInputed && isCorrect">
+                <span class="h1 mb-0">🟢🙆‍♂️🟢</span>
+              </template>
+              <template x-if="isInputed && !isCorrect">
+                <span class="h1 mb-0">🔴🙅‍♂️🔴</span>
+              </template>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <div class="mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <p class="card-text">
+                    Q<span x-text="cur+1"></span>. 아래 내용은 어떤 원가에 대한 내용일까요?
+                  </p>
+                </div>
+                <div class="card-body text-center">
+                  <h5 class="card-title">
+                    <strong x-text="curData.question"></strong>
+                  </h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column gap-4">
+              <template x-for="item in categories">
+                <div class="d-flex">
+                  <button
+                    style="flex: 1;"
+                    @click="() => {
+                      data[cur].input = item;
+                    }"
+                    :class="`btn d-block py-3 ${!(isInputed && item === curData.input) ? 'btn-outline-secondary' : isCorrect ? 'btn-success' : 'btn-danger'}`"
+                  >
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                      <div></div>
+                      <span x-text="item"></span>
+                      <div></div>
+                    </div>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main-section>
+  </div>
+
+  <script src="/common-script.js"></script>
+</body>
+</html>

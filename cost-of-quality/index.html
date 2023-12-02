@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>품질원가 분류</title>
+  <link rel="stylesheet" href="/common-style.css" />
+  
+</head>
+<body>
+  <div id="root" class="loading">
+    <nav-bar></nav-bar>
+    <main-section>
+        <figure class="mb-4">
+          <blockquote class="blockquote">
+            <p>📚 품질원가에 대해서 공부볼까요?</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            메뉴를 선택해주세요.  
+          </figcaption>
+        </figure>
+        <div class="row gap-4" x-data="{ data }">
+          <template x-for="item in data">
+            <div>
+              <a x-bind:href="item[1]"
+                class="btn btn-primary btn-lg d-block"
+              >
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                  <span class="h5 mb-0">🧩</span>
+                  <span class="h6 mb-0" x-text="item[0]"></span>
+                  <span><i class="bi bi-box-arrow-up-right"></i></span>
+                </div>
+              </a>
+            </div>
+          </template>
+        </div>
+    </main-section>
+  </div>
+
+  <script src="/common-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>품질원가 분류 - 자료보기</title>
+  <link rel="stylesheet" href="/common-style.css" />
+  
+</head>
+<body>
+  <div id="root" class="loading">
+    <nav-bar></nav-bar>
+    <main-section>
+      <div x-data="{ data, idPrefix: 'list_' }">
+        <div id="accordion_list" class="accordion">
+          <template x-for="(item, index) in data">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button 
+                  class="accordion-button collapsed" 
+                  type="button" 
+                  data-bs-toggle="collapse" 
+                  aria-expanded="false"
+                  x-bind:data-bs-target="`#${idPrefix}${index}`" 
+                  x-bind:aria-controls="`#${idPrefix}${index}`"
+                >
+                  <div class="me-2">✔</div>
+                  <div x-text="index"></div>
+                </button>
+              </h2>
+              <div 
+                x-bind:id="`${idPrefix}${index}`" 
+                class="accordion-collapse collapse" 
+                data-bs-parent="#accordion_list"
+              >
+                <div class="accordion-body">
+                  <div class="mb-2">
+                    설명 : 
+                    <span x-text="item.description"></span>
+                  </div>
+                  <ul class="list-group">
+                    <template x-for="value in item.list">
+                      <li class="list-group-item" x-text="value"></li>
+                    </template>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+      </main-section>
+    </div>
+
+  <script src="/common-script.js"></script>
+</body>
+</html>

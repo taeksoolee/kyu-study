@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>품질원가 분류 - 결과보기</title>
+  <link rel="stylesheet" href="/common-style.css" />
+</head>
+<body>
+  <div id="root" class="loading">
+    <nav-bar></nav-bar>
+    <main-section>
+      <div class="text-center mt-4 mb-4">
+        <h5 class="text-dark">
+          고생 하셨습니다 🙇‍♂️
+        </h5>
+      </div>
+
+      <div x-data="{data: data.cnt}">
+        <div class="card">
+          <div class="card-header">
+            결과
+          </div>
+          <div class="card-body">
+            <div>
+              총 <h5 x-text="data.totalCnt" class="d-inline"></h5> 개 중 <h5 x-text="data.correctCnt" class="d-inline text-success"></h5> 개는 맞고 <h5 x-text="data.incorrectCnt" class="d-inline text-danger"></h5> 개는 틀렸습니다.
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div x-data="{data: data.paper}" class="mt-4">
+        <div style="overflow: scroll;">
+          <table class="table" style="min-width: 460px">
+            <!-- <colgroup>
+              <col width="8%" />
+              <col width="25%" />
+              <col width="25%" />
+              <col width="25%" />
+              <col width="15%" />
+            </colgroup> -->
+            <thead>
+              <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">결과</th>
+                <th scope="col">문제</th>
+                <th scope="col">정답</th>
+                <th scope="col">입력</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template x-for="(item, index) in data" x-bind:key="index">
+                <tr>
+                  <!-- <td x-text="index+1"></td> -->
+                  <template x-if="item.answer === item.input">
+                    <td class="text-success">O</td>
+                  </template>
+                  <template x-if="item.answer !== item.input">
+                    <td class="text-danger">X</td>
+                  </template>
+                  <td x-text="item.question"></td>
+                  <td x-text="item.answer"></td>
+                  <td x-text="item.input"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main-section>
+  </div>
+
+  <script type="module" src='/components/index.mjs'></script>
+  <script src="/common-script.js"></script>
+</body>
+</html>
