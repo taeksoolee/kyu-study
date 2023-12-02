@@ -1,5 +1,4 @@
-import data from '/data/cost-of-qaulity.mjs';
-
+import data from '../../data/cost-of-qaulity.mjs';
 
 const categories = Object.keys(data);
 window.categories = categories;

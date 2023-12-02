@@ -4,7 +4,3 @@
 :root {
   --navbar-height: 56px;
 }
-
-#root.loading {
-  display: none;
-}

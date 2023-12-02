@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>품질원가 분류 - 자료보기</title>
-  <link rel="stylesheet" href="/common-style.css" />
-  
 </head>
 <body>
-  <div id="root" class="loading">
+  <div id="root" style="visibility: hidden;">
     <nav-bar></nav-bar>
     <main-section>
       <div x-data="{ data, idPrefix: 'list_' }">
@@ -49,9 +47,16 @@
           </template>
         </div>
       </div>
-      </main-section>
-    </div>
+    </main-section>
+  </div>
 
-  <script src="/common-script.js"></script>
+  <script>
+    const isDev = !window.location.protocol.includes('s');
+    const siteContext = isDev ? '' : '/kyu-study';
+    
+    const script = document.createElement('script');
+    script.src = '/common-script.js';
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>
