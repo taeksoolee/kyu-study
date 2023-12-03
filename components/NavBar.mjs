@@ -63,9 +63,12 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
                 </div>
               `
               : html`
-                <a href="${this.backUrl}" class="btn text-light">
+                <!-- <a href="${this.backUrl}" class="btn text-light">
                   <i class="bi bi-backspace d-flex align-items-center"></i>
-                </a>
+                </a> -->
+                <button class="btn text-light" onclick="() => window.navigation.back();">
+                  <i class="bi bi-backspace d-flex align-items-center"></i>
+                </button>
               `
           }
           <a class="navbar-brand text-light me-0">
