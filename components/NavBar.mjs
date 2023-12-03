@@ -6,6 +6,8 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
   }
   
   connectedCallback() {
+    const _back = () => window.navigation.back();
+
     const _toggleHeart = () => {
       const clsList = document.querySelector('#heart').classList;
       if (clsList.contains('run')) {
@@ -66,7 +68,7 @@ customElements.define('nav-bar', class MyNavBar extends HTMLElement {
                 <!-- <a href="${this.backUrl}" class="btn text-light">
                   <i class="bi bi-backspace d-flex align-items-center"></i>
                 </a> -->
-                <button class="btn text-light" onclick="() => window.navigation.back();">
+                <button class="btn text-light" @click="${_back}">
                   <i class="bi bi-backspace d-flex align-items-center"></i>
                 </button>
               `
